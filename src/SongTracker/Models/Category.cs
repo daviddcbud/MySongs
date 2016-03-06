@@ -6,41 +6,38 @@ using System.Threading.Tasks;
 
 namespace SongTracker.Models
 {
-    public class Song
+    public class Category
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Artist { get; set; }
         public ICollection<SongTag> SongTags { get; set; }
-        public ICollection<SongLink> SongLinks { get; set; }
-        public ICollection<SongPlayList> SongPlayLists { get; set; }
-        
     }
-    public class SongConfiguration
+
+    public class CategoryConfiguration
     {
         public static void Configure(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Song>()
-                       .ToTable("Songs")
+            modelBuilder.Entity<Category>()
+                       .ToTable("Categories")
                        .HasKey(s => new { s.Id });
 
-            modelBuilder.Entity<Song>()
+            modelBuilder.Entity<Category>()
                         .Property(s => s.Id)
                         .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Song>()
+            modelBuilder.Entity<Category>()
                         .Property(s => s.Name)
                         .HasColumnType("varchar")
-                        .HasMaxLength(50)
+                        .HasMaxLength(150)
                         .IsRequired();
 
-
-            modelBuilder.Entity<Song>()
-                        .Property(s => s.Artist)
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50)
-                        .IsRequired();
              
+
+
+
+            modelBuilder.Entity<Category>()
+                       .HasMany(x=>x.SongTags).WithOne(x=>x.Category)
+                        .HasForeignKey(ctzc => new { ctzc.CategoryId });
         }
     }
 }

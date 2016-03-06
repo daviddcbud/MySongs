@@ -42,6 +42,8 @@ namespace SongTracker
         {
             services.AddMvc().AddJsonOptions(o => o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             services.AddMvc().AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            AzureAppSettings.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
             // Add framework services.
             services.AddEntityFramework()
                 .AddSqlServer()

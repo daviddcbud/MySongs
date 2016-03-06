@@ -1,0 +1,14 @@
+﻿
+
+<form>
+    <div style="display:flex">
+        <input id="{{id}}" type="text" class="form-control" placeholder="{{placeholder}}" [(ngModel)]="searchText"
+               (keyup)="keypress($event.keyCode)" />
+        <span style="align-self:center" class="glyphicon glyphicon-remove" (click)="clearSearch()"></span>
+    </div>
+</form>
+<div *ngIf="filteredData" style="max-width:280px;position:absolute;z-index:9;background-color:#fbf7f7">
+    <div *ngFor="#data of filteredData" style="min-width:280px;margin-bottom:20px;">
+        <div class="item" [class.selected]="isSelected(data)" (click)="select(data)">{{data.name}}</div>
+    </div>
+</div>

@@ -34,17 +34,17 @@ namespace SongTracker.Services
             {
                 var showMessage = true;
                 //there are some messages we don't need to show b/c the real error is buried down in the inner exceptions
-                if (message.ToLower() != "one or more errors occurred.")
+                if (exception.Message.ToLower() == "one or more errors occurred.")
                 {
                     showMessage = false;
                 }
-                if (message.ToLower().Contains("see the inner exception"))
+                if (exception.Message.ToLower().Contains("see the inner exception"))
                 {
                     showMessage = false;
                 }
                 if (showMessage)
                 {
-                    message += exception.Message;
+                    message += " " + exception.Message;
                 }
                 exception = exception.InnerException;
             }

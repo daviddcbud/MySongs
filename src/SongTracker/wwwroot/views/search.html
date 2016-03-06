@@ -1,0 +1,94 @@
+﻿
+
+<song (onSave)="songSaved($event)"></song>
+
+
+<form novalidate id="form" *ngIf="!loading && model">
+    <div>
+        <button class="btn btn-primary">Add New Song</button>
+    </div>
+    <div class="form-group">
+        <label>
+            Search by
+        </label>
+        <select class="form-control" required [(ngModel)]="model.searchOption">
+            <option *ngFor="#t of searchOptions" [value]="t.id">{{t.name}}</option>
+        </select>
+    </div>
+        <div class="form-group" *ngIf="model.searchOption==0">
+            <label>
+               Select Category
+            </label>
+            <select class="form-control"   required [(ngModel)]="categoryId">
+                <option *ngFor="#t of tags" [value]="t.id">{{t.name}}</option>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="model.searchOption==1">
+            <label>
+                Search by Title
+            </label>
+            <input type="search" class="form-control" [(ngModel)]="model.title" />
+        </div>
+
+        <div *ngIf="model.searchOption==1">
+            <button class="btn btn-primary"   (click)="search()">Search</button>
+        </div>
+</form> 
+<div *ngIf="searching || loading" class="spinner">
+    <img class="spinner" src="/images/ajaxSpinner.gif" />
+</div>
+
+<div class="hidden-sm hidden-xs">
+    <div *ngIf="results.length > 0 && !searching">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Categories</th>
+                    <th>Last Played</th>
+                    <th>Last 12 months</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#song of results">
+                    <td>
+                        <a (click)="editSong(song)">Edit</a>
+                    </td>
+                    <td>{{song.title}}</td>
+                    <td>{{song.artist}}</td>
+                    <td>{{song.categories}}</td>
+                    <td>{{song.lastPlayed}}</td>
+                    <td>{{song.playCount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="hidden-md hidden-lg">
+    <div *ngIf="results.length > 0 && !searching">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="#song of results">
+                    <td>
+                        <div>
+                            <a (click)="editSong(song)">Edit</a><br/>
+                            Title: {{song.title}}<br />
+                            Artist: {{song.artist}}<br />
+                            Last Played: {{song.lastPlayed}}<br />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -11,9 +11,12 @@ namespace SongTracker.Models
     {
         public int Id { get; set; }
         public int SongId { get; set; }
-        public string Tag { get; set; }
+        public int CategoryId { get; set; }
+        public bool IsDeleted { get; set; }
         [JsonIgnore]
         public virtual Song Song { get; set; }
+        [JsonIgnore]
+        public virtual Category Category { get; set; }
     }
 
     public class SongTagConfiguration
@@ -29,12 +32,11 @@ namespace SongTracker.Models
                         .ValueGeneratedOnAdd();
              
             modelBuilder.Entity<SongTag>()
-                        .Property(s => s.Tag)
-                        .HasColumnType("varchar")
-                        .HasMaxLength(50)
+                        .Property(s => s.CategoryId)
+                        .HasColumnType("int")
                         .IsRequired();
 
-
+            modelBuilder.Entity<SongTag>().Ignore(x => x.IsDeleted);
             modelBuilder.Entity<SongTag>()
                         .Property(s => s.SongId)
                         .HasColumnType("int")

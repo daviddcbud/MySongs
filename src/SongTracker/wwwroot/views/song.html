@@ -1,0 +1,78 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="songModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Song</h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="loading" class="spinner">
+                    <img class="spinner" src="/images/ajaxSpinner.gif" />
+                </div>
+                <div *ngIf="!loading">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" required class="form-control" [(ngModel)]="model.name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Artist</label>
+                        <input type="text" class="form-control" [(ngModel)]="model.artist" />
+                    </div>
+
+                    <div>
+                        <label>Categories</label>
+                        <div>
+                            <div style="margin-bottom:5px">
+                                <button class="btn btn-primary">New Category</button>
+                            </div>
+                            <div *ngFor="#cat of model.songTags">
+                                <div *ngIf="!cat.isDeleted">
+                                    <div style="display:flex">
+                                        <span class="glyphicon glyphicon-remove" title="delete" (click)="deleteCategory(cat)"></span>
+                                        <select class="form-control" required [(ngModel)]="cat.categoryId">
+                                            <option *ngFor="#t of tags" [value]="t.id">{{t.name}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Links</label>
+                        <div style="margin-bottom:5px">
+                            <button class="btn btn-primary">New Link</button>
+                        </div>
+                        <div *ngFor="#link of model.songLinks">
+                            <div *ngIf="!link.isDeleted">
+                                <div style="display:flex">
+                                    <span class="glyphicon glyphicon-remove" title="delete" (click)="deleteLink(link)"></span>
+                                    <div class="form-group">
+                                        <label>Link</label>
+                                        <input type="text" required class="form-control" [(ngModel)]="link.link" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" [(ngModel)]="link.description" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="save()">Save</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.email modal -->

@@ -1,1 +1,34 @@
-﻿{{message}}
+﻿
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fullwidth header">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Song Tracker</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <ul class="nav navbar-nav">
+                <li><a   (click)="goToRoute('SearchComponent')">Search</a></li>
+                <li><a   (click)="goToRoute('PlayListComponent')">Playlists</a></li>
+                <li><a   (click)="goToRoute('CategoryComponent')">Category Setup</a></li>
+                <!--<li>
+                    <a target="_blank" href="/Account/SignOut">Sign Out</a>
+                </li>-->
+            </ul>
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+<div style="margin:20px;">
+    <router-outlet></router-outlet>
+</div>

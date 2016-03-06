@@ -19,6 +19,9 @@ namespace SongTracker.Data
 
         public DbSet<Song> Songs { get; set; }
         public DbSet<SongTag> SongTags { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<PlayList> PlayLists { get; set; }
+        public DbSet<SongPlayList> SongPlayLists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +29,10 @@ namespace SongTracker.Data
 
             SongConfiguration.Configure(modelBuilder);
             SongTagConfiguration.Configure(modelBuilder);
+            SongLinkConfiguration.Configure(modelBuilder);
+            CategoryConfiguration.Configure(modelBuilder);
+            SongPlayListConfiguration.Configure(modelBuilder);
+            PlayListConfiguration.Configure(modelBuilder);
         }
 
         }
