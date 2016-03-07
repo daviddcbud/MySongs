@@ -30,13 +30,13 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         router_1.RouteConfig([
             {
-                path: '/search', name: 'SearchComponent', component: searchComponent_1.SearchComponent, useAsDefault: true
+                path: '/search', name: 'SearchComponent', component: searchComponent_1.SearchComponent
             },
             {
                 path: '/categories', name: 'CategoryComponent', component: categoryComponent_1.CategoryComponent
             },
             {
-                path: '/playLists', name: 'PlayListComponent', component: playListComponent_1.PlayListComponent
+                path: '/playLists', name: 'PlayListComponent', component: playListComponent_1.PlayListComponent, useAsDefault: true
             }
         ]),
         core_1.Component({

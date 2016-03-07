@@ -19,6 +19,7 @@ export class AddSongsComponent implements OnInit {
     @ViewChild(SongComponent)
     private _songComponent: SongComponent;
     @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onNewSong: EventEmitter<any> = new EventEmitter<any>();
     model: any;
     @Input() playListId: any;
 
@@ -32,6 +33,8 @@ export class AddSongsComponent implements OnInit {
         this.search();
         var modal = <any>$('#songModal');
         modal.modal('hide');
+
+        this.onNewSong.emit(song);
     }
     add(song) {
         

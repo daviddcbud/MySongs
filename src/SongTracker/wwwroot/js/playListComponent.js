@@ -28,6 +28,9 @@ var PlayListComponent = (function () {
     PlayListComponent.prototype.doneAdding = function () {
         this.addingSongs = false;
     };
+    PlayListComponent.prototype.newSongAdded = function (song) {
+        this._addSongsComponent.add(song);
+    };
     PlayListComponent.prototype.songsAdded = function (song) {
         this.loadPlayList();
     };
@@ -124,7 +127,7 @@ var PlayListComponent = (function () {
     ], PlayListComponent.prototype, "_addSongsComponent", void 0);
     PlayListComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/playLists.html?v=1.4',
+            templateUrl: '/views/playLists.html?v=1.7',
             selector: 'playList',
             directives: [autocompleteComponent_1.AutoCompleteComponent, addSongsComponent_1.AddSongsComponent]
         }), 

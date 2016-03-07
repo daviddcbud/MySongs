@@ -19,6 +19,7 @@ var AddSongsComponent = (function () {
         this._http = _http;
         this._errorHandler = _errorHandler;
         this.onSave = new core_1.EventEmitter();
+        this.onNewSong = new core_1.EventEmitter();
         this.model = {};
         this.searchOptions = [];
         this.searchOptions.push({ id: 0, name: 'Category' });
@@ -32,6 +33,7 @@ var AddSongsComponent = (function () {
         this.search();
         var modal = $('#songModal');
         modal.modal('hide');
+        this.onNewSong.emit(song);
     };
     AddSongsComponent.prototype.add = function (song) {
         var headers = new http_1.Headers();
@@ -123,6 +125,10 @@ var AddSongsComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], AddSongsComponent.prototype, "onSave", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], AddSongsComponent.prototype, "onNewSong", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)

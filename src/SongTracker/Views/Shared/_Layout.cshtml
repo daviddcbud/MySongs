@@ -24,7 +24,14 @@
         });
         System.import('js/boot')
               .then(null, console.error.bind(console));
-
+        var systemLocate = System.locate;
+        System.locate = function (load) {
+            var System = this; // its good to ensure exact instance-binding
+            return Promise.resolve(systemLocate.call(this, load)).then(function (address) {
+                return address + System.cacheBust;
+            });
+        }
+        System.cacheBust = '?bust=' + Date.now();
 
         // ]]></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />

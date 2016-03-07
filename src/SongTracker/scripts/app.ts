@@ -9,14 +9,14 @@ import {PlayListComponent} from "./playListComponent"
 @RouteConfig([
   
     {
-        path: '/search', name: 'SearchComponent', component: SearchComponent, useAsDefault: true
+        path: '/search', name: 'SearchComponent', component: SearchComponent
     },
     {
         path: '/categories', name: 'CategoryComponent', component: CategoryComponent
     }
     ,
     {
-        path: '/playLists', name: 'PlayListComponent', component: PlayListComponent
+        path: '/playLists', name: 'PlayListComponent', component: PlayListComponent, useAsDefault: true
     }
 ])
 

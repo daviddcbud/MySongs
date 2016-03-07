@@ -9,7 +9,7 @@ import 'rxjs/Rx'
 import {ErrorHandlerService} from "./shared/errorHandlerService"
 import {AddSongsComponent} from "./addSongsComponent"
 @Component({
-    templateUrl: '/views/playLists.html?v=1.4',
+    templateUrl: '/views/playLists.html?v=1.7',
     selector: 'playList',
     directives: [AutoCompleteComponent, AddSongsComponent]
 })
@@ -26,14 +26,21 @@ export class PlayListComponent implements OnInit {
     newMode: boolean;
     editingPlaylist: any;
     addingSongs: boolean;
+     
     addSongs() {
-         
+        
         this.addingSongs = true;
     }
     doneAdding() {
+         
         this.addingSongs = false;
     }
+    newSongAdded(song) {
+        this._addSongsComponent.add(song);
+         
+    }
     songsAdded(song) {
+        
         this.loadPlayList();
     }
 

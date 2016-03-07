@@ -33,8 +33,12 @@ namespace SongTracker.Controllers
             return await base.DoWorkAndReturnData(async () =>
             {
                 model.Id = 0;
-                context.SongPlayLists.Add(model);
-                await context.SaveChangesAsync();
+                var exists = await context.SongPlayLists.Where(x => x.PlayListId == model.PlayListId && x.SongId == model.SongId).FirstOrDefaultAsync();
+                if (exists == null)
+                {
+                    context.SongPlayLists.Add(model);
+                    await context.SaveChangesAsync();
+                }
                 return new ObjectResult(model.Id);
             });
         }
