@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit {
     songToEdit: any;
     songSaved(song) {
         this.search();
+        
         var modal = <any>$('#songModal');
         modal.modal('hide');
     }

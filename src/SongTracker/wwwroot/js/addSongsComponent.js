@@ -44,12 +44,12 @@ var AddSongsComponent = (function () {
         this.loading = true;
         var json = JSON.stringify(vm);
         _this._http.post('/api/AddSongToPlayList', json, { headers: headers }).map(function (r) { return r.json(); }).subscribe(function (x) {
-            _this.loading = true;
+            _this.loading = false;
             _this.onSave.emit(song);
             song.added = true;
         }, function (error) {
             _this._errorHandler.handleError(error);
-            _this.loading = true;
+            _this.loading = false;
         });
     };
     AddSongsComponent.prototype.newSong = function () {

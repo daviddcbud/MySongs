@@ -56,7 +56,6 @@ var SongComponent = (function () {
         this.getSong().subscribe(function (x) {
             _this.loading = false;
             _this.model = x;
-            _this.onSave.emit(_this.id);
         }, function (error) {
             _this.loading = false;
             _this._errorHandler.handleError(error);

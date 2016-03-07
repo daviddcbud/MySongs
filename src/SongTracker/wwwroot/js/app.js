@@ -20,6 +20,8 @@ var AppComponent = (function () {
         this._errorHandler = _errorHandler;
     }
     AppComponent.prototype.goToRoute = function (route, params) {
+        $('.navbar-collapse').removeClass('in');
+        $('.navbar-collapse').removeClass('open');
         this._router.navigate([route, params]);
     };
     AppComponent.prototype.ngOnInit = function () {

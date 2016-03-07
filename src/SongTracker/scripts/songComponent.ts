@@ -61,7 +61,7 @@ export class SongComponent implements OnInit {
         this.getSong().subscribe(x => {
             this.loading = false;
             this.model = x;
-            this.onSave.emit(this.id);
+            
         },
             error => {
                 this.loading = false;
