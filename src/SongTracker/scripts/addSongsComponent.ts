@@ -1,5 +1,5 @@
 ﻿declare var $: any;
-import {Component,ViewChild} from "angular2/core";
+import {Component, ViewChild, Output,Input,EventEmitter} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {AutoCompleteComponent} from "./shared/autocompleteComponent"
 import {FocusService} from "./shared/focusService"
@@ -10,16 +10,18 @@ import {ErrorHandlerService} from "./shared/errorHandlerService"
 import {SongComponent} from "./songComponent"
 
 @Component({
-    templateUrl: '/views/search.html?v=1.4',
-    selector: 'search',
+    templateUrl: '/views/addsongs.html?v=1.4',
+    selector: 'addsongs',
     directives: [AutoCompleteComponent, SongComponent]
 })
 
-export class SearchComponent implements OnInit {
+export class AddSongsComponent implements OnInit {
     @ViewChild(SongComponent)
     private _songComponent: SongComponent;
+    @Output() onSave: EventEmitter<any> = new EventEmitter<any>();
     model: any;
-     
+    @Input() playListId: any;
+
     tags: any[];
     loading: boolean;
     results: any[];
@@ -31,7 +33,31 @@ export class SearchComponent implements OnInit {
         var modal = <any>$('#songModal');
         modal.modal('hide');
     }
-    addSong() {
+    add(song) {
+        
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        var vm: any;
+        vm = {};
+        vm.playListId = this.playListId;
+        vm.songId = song.id;
+       
+        var _this = this;
+        this.loading = true;
+        var json = JSON.stringify(vm);
+        
+        _this._http.post('/api/AddSongToPlayList', json,
+            { headers: headers }).map(r => r.json()).subscribe(x => {
+                _this.loading = false;
+                _this.onSave.emit(song);
+                song.added = true;
+            },
+            error => {
+                _this._errorHandler.handleError(error);
+                _this.loading = false;
+            });
+    }
+    newSong() {
         this.songToEdit = {};
         this.songToEdit.id = 0;
         this.songToEdit.name = '';
@@ -68,7 +94,7 @@ export class SearchComponent implements OnInit {
         this.model.title = '';
         this.results = [];
     }
-     
+
     tagChosen() {
     }
     onTagSelected($event) {

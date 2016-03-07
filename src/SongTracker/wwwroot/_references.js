@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="../gulpfile.js" />
+/// <reference path="js/addsongscomponent.js" />
 /// <reference path="js/app.js" />
 /// <reference path="js/boot.js" />
 /// <reference path="js/categorycomponent.js" />

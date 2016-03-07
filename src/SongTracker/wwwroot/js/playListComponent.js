@@ -9,10 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("angular2/core");
+var core_2 = require("angular2/core");
 var autocompleteComponent_1 = require("./shared/autocompleteComponent");
 var http_1 = require("angular2/http");
 require('rxjs/Rx');
 var errorHandlerService_1 = require("./shared/errorHandlerService");
+var addSongsComponent_1 = require("./addSongsComponent");
 var PlayListComponent = (function () {
     function PlayListComponent(_http, _errorHandler) {
         this._http = _http;
@@ -20,6 +22,15 @@ var PlayListComponent = (function () {
         this.playLists = [];
         this.songs = [];
     }
+    PlayListComponent.prototype.addSongs = function () {
+        this.addingSongs = true;
+    };
+    PlayListComponent.prototype.doneAdding = function () {
+        this.addingSongs = false;
+    };
+    PlayListComponent.prototype.songsAdded = function (song) {
+        this.loadPlayList();
+    };
     PlayListComponent.prototype.newPlayList = function () {
         this.editingPlaylist = {};
         this.editingPlaylist.id = 0;
@@ -107,11 +118,15 @@ var PlayListComponent = (function () {
             _this.loading = true;
         });
     };
+    __decorate([
+        core_2.ViewChild(addSongsComponent_1.AddSongsComponent), 
+        __metadata('design:type', addSongsComponent_1.AddSongsComponent)
+    ], PlayListComponent.prototype, "_addSongsComponent", void 0);
     PlayListComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/playLists.html?v=1.3',
+            templateUrl: '/views/playLists.html?v=1.4',
             selector: 'playList',
-            directives: [autocompleteComponent_1.AutoCompleteComponent]
+            directives: [autocompleteComponent_1.AutoCompleteComponent, addSongsComponent_1.AddSongsComponent]
         }), 
         __metadata('design:paramtypes', [http_1.Http, errorHandlerService_1.ErrorHandlerService])
     ], PlayListComponent);

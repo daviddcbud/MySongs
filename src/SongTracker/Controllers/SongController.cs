@@ -18,7 +18,8 @@ namespace SongTracker.Controllers
             return await base.DoWorkAndReturnData(async () =>
             {
                 var data = await context.Songs.Include(x => x.SongLinks)
-                .Include(x => x.SongTags).ThenInclude(x => x.Category).Where(x=>x.Id==id).
+                .Include(x => x.SongTags).ThenInclude(x => x.Category).
+                Include(x=>x.SongPlayLists).Where(x=>x.Id==id).
                 SingleAsync();
                 return new ObjectResult(data);
             });
@@ -43,9 +44,11 @@ namespace SongTracker.Controllers
             {
                 context.Attach<Song>(song);
 
-                if (song.Id == 0)
+                if (song.Id <= 0)
                 {
+                    song.Id = 0;
                     context.Entry<Song>(song).State = EntityState.Added;
+
                 }
                 else
                 {
@@ -53,10 +56,16 @@ namespace SongTracker.Controllers
                 }
                 foreach(var link in song.SongLinks)
                 {
-                    if (link.Id == 0) continue;
-                    if(link.Id==0 && !link.IsDeleted)
+                    if (link.Id <= 0 && link.IsDeleted) continue;
+
+                    if (string.IsNullOrEmpty(link.Description)) link.Description = link.Link;
+                    if(link.Id <=0 && !link.IsDeleted)
                     {
+                        link.Id = 0;
                         context.Entry<SongLink>(link).State = EntityState.Added;
+                        link.Song = song;
+                        link.SongId = 0;
+
                     }
                     else if(link.IsDeleted){
                         context.Entry<SongLink>(link).State = EntityState.Deleted;
@@ -69,10 +78,13 @@ namespace SongTracker.Controllers
 
                 foreach (var link in song.SongTags)
                 {
-                    if (link.Id == 0 && link.IsDeleted) continue;
-                    if (link.Id == 0)
+                    if (link.Id <= 0 && link.IsDeleted) continue;
+                    if (link.Id <= 0)
                     {
+                        link.Id = 0;
                         context.Entry<SongTag>(link).State = EntityState.Added;
+                        link.Song = song;
+                        link.SongId = 0;
                     }
                     else if (link.IsDeleted)
                     {

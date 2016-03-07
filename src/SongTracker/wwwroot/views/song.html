@@ -24,7 +24,7 @@
                         <label>Categories</label>
                         <div>
                             <div style="margin-bottom:5px">
-                                <button class="btn btn-primary">New Category</button>
+                                <button class="btn btn-primary" (click)="newCategory()">Add Another Category</button>
                             </div>
                             <div *ngFor="#cat of model.songTags">
                                 <div *ngIf="!cat.isDeleted">
@@ -45,7 +45,7 @@
                     <div>
                         <label>Links</label>
                         <div style="margin-bottom:5px">
-                            <button class="btn btn-primary">New Link</button>
+                            <button class="btn btn-primary" (click)="newLink()">Add Link</button>
                         </div>
                         <div *ngFor="#link of model.songLinks">
                             <div *ngIf="!link.isDeleted">

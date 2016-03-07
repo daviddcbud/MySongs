@@ -70,7 +70,7 @@ export class CategoryComponent implements OnInit {
             },
             error => {
                 _this._errorHandler.handleError(error);
-                _this.loading = true;
+                _this.loading = false;
             });
 
     }

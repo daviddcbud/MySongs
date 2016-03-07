@@ -16,6 +16,16 @@ namespace SongTracker.Models
         public bool IsDeleted { get; set; }
         [JsonIgnore]
         public virtual Song Song { get; set; }
+
+        internal void FormatLink()
+        {
+            if(!this.Link.ToLower().StartsWith("http")
+                || !this.Link.ToLower().StartsWith("https")
+                )
+            {
+                this.Link = "http://" + this.Link;
+            }
+        }
     }
     public class SongLinkConfiguration
     {

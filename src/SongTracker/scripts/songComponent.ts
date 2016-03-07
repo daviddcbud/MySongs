@@ -8,7 +8,7 @@ import 'rxjs/Rx'
 import {ErrorHandlerService} from "./shared/errorHandlerService"
 
 @Component({
-    templateUrl: '/views/song.html?v=1.0',
+    templateUrl: '/views/song.html?v=1.1',
     selector: 'song',
     directives: [AutoCompleteComponent]
 })
@@ -22,8 +22,8 @@ export class SongComponent implements OnInit {
     constructor(private _http: Http, private _errorHandler: ErrorHandlerService) {
         this.model = {};
      }
-   
 
+     
     getSong() {
         return this._http.get('/api/Song?id=' + this.id).map(res => res.json());
     }
@@ -34,15 +34,20 @@ export class SongComponent implements OnInit {
     newLink() {
         var cat: any;
         cat = {};
+        cat.isDeleted = false;
         cat.link = '';
+        cat.id = 0;
         cat.description = '';
         this.model.songLinks.push(cat);
     }
     newCategory() {
         var cat: any;
-        cat = { };
+        cat = {};
+        cat.id = 0;
+        cat.isDeleted = false;
         cat.categoryId = 0;
         this.model.songTags.push(cat);
+         
     }
     deleteCategory(cat) {
         cat.isDeleted = true;
@@ -56,7 +61,7 @@ export class SongComponent implements OnInit {
         this.getSong().subscribe(x => {
             this.loading = false;
             this.model = x;
-             
+            this.onSave.emit(this.id);
         },
             error => {
                 this.loading = false;
@@ -90,7 +95,7 @@ export class SongComponent implements OnInit {
             },
             error => {
                 _this._errorHandler.handleError(error);
-                 
+                _this.loading = false;
             });
 
     }

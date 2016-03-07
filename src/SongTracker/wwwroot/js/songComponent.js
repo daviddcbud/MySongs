@@ -29,13 +29,17 @@ var SongComponent = (function () {
     SongComponent.prototype.newLink = function () {
         var cat;
         cat = {};
+        cat.isDeleted = false;
         cat.link = '';
+        cat.id = 0;
         cat.description = '';
         this.model.songLinks.push(cat);
     };
     SongComponent.prototype.newCategory = function () {
         var cat;
         cat = {};
+        cat.id = 0;
+        cat.isDeleted = false;
         cat.categoryId = 0;
         this.model.songTags.push(cat);
     };
@@ -52,6 +56,7 @@ var SongComponent = (function () {
         this.getSong().subscribe(function (x) {
             _this.loading = false;
             _this.model = x;
+            _this.onSave.emit(_this.id);
         }, function (error) {
             _this.loading = false;
             _this._errorHandler.handleError(error);
@@ -78,6 +83,7 @@ var SongComponent = (function () {
             _this.onSave.emit(x);
         }, function (error) {
             _this._errorHandler.handleError(error);
+            _this.loading = false;
         });
     };
     __decorate([
@@ -86,7 +92,7 @@ var SongComponent = (function () {
     ], SongComponent.prototype, "onSave", void 0);
     SongComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/song.html?v=1.0',
+            templateUrl: '/views/song.html?v=1.1',
             selector: 'song',
             directives: [autocompleteComponent_1.AutoCompleteComponent]
         }), 

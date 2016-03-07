@@ -26,6 +26,19 @@ namespace SongTracker.Controllers
             });
         }
 
+        [Route("api/AddSongToPlayList")]
+        [HttpPost]
+        public async Task<IActionResult> AddSong([FromBody] SongPlayList model)
+        {
+            return await base.DoWorkAndReturnData(async () =>
+            {
+                model.Id = 0;
+                context.SongPlayLists.Add(model);
+                await context.SaveChangesAsync();
+                return new ObjectResult(model.Id);
+            });
+        }
+
         [Route("api/SavePlayList")]
         [HttpPost]
         public async Task<IActionResult> SavePlayList([FromBody] PlayListVM vm)
@@ -86,7 +99,7 @@ namespace SongTracker.Controllers
                     foreach (var link in song.Song.SongLinks)
                     {
                         songVM.Links.Add(link);
-
+                        link.FormatLink();
                         
 
                     }

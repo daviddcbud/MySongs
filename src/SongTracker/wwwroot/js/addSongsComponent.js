@@ -14,10 +14,11 @@ var http_1 = require("angular2/http");
 require('rxjs/Rx');
 var errorHandlerService_1 = require("./shared/errorHandlerService");
 var songComponent_1 = require("./songComponent");
-var SearchComponent = (function () {
-    function SearchComponent(_http, _errorHandler) {
+var AddSongsComponent = (function () {
+    function AddSongsComponent(_http, _errorHandler) {
         this._http = _http;
         this._errorHandler = _errorHandler;
+        this.onSave = new core_1.EventEmitter();
         this.model = {};
         this.searchOptions = [];
         this.searchOptions.push({ id: 0, name: 'Category' });
@@ -27,12 +28,31 @@ var SearchComponent = (function () {
         this.model.title = '';
         this.results = [];
     }
-    SearchComponent.prototype.songSaved = function (song) {
+    AddSongsComponent.prototype.songSaved = function (song) {
         this.search();
         var modal = $('#songModal');
         modal.modal('hide');
     };
-    SearchComponent.prototype.addSong = function () {
+    AddSongsComponent.prototype.add = function (song) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        var vm;
+        vm = {};
+        vm.playListId = this.playListId;
+        vm.songId = song.id;
+        var _this = this;
+        this.loading = true;
+        var json = JSON.stringify(vm);
+        _this._http.post('/api/AddSongToPlayList', json, { headers: headers }).map(function (r) { return r.json(); }).subscribe(function (x) {
+            _this.loading = true;
+            _this.onSave.emit(song);
+            song.added = true;
+        }, function (error) {
+            _this._errorHandler.handleError(error);
+            _this.loading = true;
+        });
+    };
+    AddSongsComponent.prototype.newSong = function () {
         this.songToEdit = {};
         this.songToEdit.id = 0;
         this.songToEdit.name = '';
@@ -44,13 +64,13 @@ var SearchComponent = (function () {
         var modal = $('#songModal');
         modal.modal('show');
     };
-    SearchComponent.prototype.editSong = function (song) {
+    AddSongsComponent.prototype.editSong = function (song) {
         this.songToEdit = song;
         this._songComponent.load(song.id);
         var modal = $('#songModal');
         modal.modal('show');
     };
-    Object.defineProperty(SearchComponent.prototype, "categoryId", {
+    Object.defineProperty(AddSongsComponent.prototype, "categoryId", {
         get: function () {
             return this.model.categoryId;
         },
@@ -61,14 +81,14 @@ var SearchComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    SearchComponent.prototype.tagChosen = function () {
+    AddSongsComponent.prototype.tagChosen = function () {
     };
-    SearchComponent.prototype.onTagSelected = function ($event) {
+    AddSongsComponent.prototype.onTagSelected = function ($event) {
     };
-    SearchComponent.prototype.getTags = function () {
+    AddSongsComponent.prototype.getTags = function () {
         return this._http.get('/api/tags').map(function (res) { return res.json(); });
     };
-    SearchComponent.prototype.ngOnInit = function () {
+    AddSongsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.loading = true;
         this.getTags().subscribe(function (x) {
@@ -80,7 +100,7 @@ var SearchComponent = (function () {
             _this._errorHandler.handleError(error);
         });
     };
-    SearchComponent.prototype.search = function () {
+    AddSongsComponent.prototype.search = function () {
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
         var _this = this;
@@ -98,16 +118,24 @@ var SearchComponent = (function () {
     __decorate([
         core_1.ViewChild(songComponent_1.SongComponent), 
         __metadata('design:type', songComponent_1.SongComponent)
-    ], SearchComponent.prototype, "_songComponent", void 0);
-    SearchComponent = __decorate([
+    ], AddSongsComponent.prototype, "_songComponent", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], AddSongsComponent.prototype, "onSave", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], AddSongsComponent.prototype, "playListId", void 0);
+    AddSongsComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/search.html?v=1.4',
-            selector: 'search',
+            templateUrl: '/views/addsongs.html?v=1.4',
+            selector: 'addsongs',
             directives: [autocompleteComponent_1.AutoCompleteComponent, songComponent_1.SongComponent]
         }), 
         __metadata('design:paramtypes', [http_1.Http, errorHandlerService_1.ErrorHandlerService])
-    ], SearchComponent);
-    return SearchComponent;
+    ], AddSongsComponent);
+    return AddSongsComponent;
 }());
-exports.SearchComponent = SearchComponent;
-//# sourceMappingURL=searchComponent.js.map
+exports.AddSongsComponent = AddSongsComponent;
+//# sourceMappingURL=addSongsComponent.js.map

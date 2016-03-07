@@ -1,20 +1,22 @@
-﻿import {Component} from "angular2/core";
-import {OnInit} from "angular2/core";
+﻿declare var $: any;
+import {Component} from "angular2/core";
+import {OnInit, ViewChild} from "angular2/core";
 import {AutoCompleteComponent} from "./shared/autocompleteComponent"
 import {FocusService} from "./shared/focusService"
 import {Router, RouteParams} from "angular2/router"
 import {Http, Headers} from "angular2/http"
 import 'rxjs/Rx'
 import {ErrorHandlerService} from "./shared/errorHandlerService"
-
+import {AddSongsComponent} from "./addSongsComponent"
 @Component({
-    templateUrl: '/views/playLists.html?v=1.3',
+    templateUrl: '/views/playLists.html?v=1.4',
     selector: 'playList',
-    directives: [AutoCompleteComponent]
+    directives: [AutoCompleteComponent, AddSongsComponent]
 })
 
 export class PlayListComponent implements OnInit {
-    
+    @ViewChild(AddSongsComponent)
+    private _addSongsComponent: AddSongsComponent;
     playLists: any[];
     loading: boolean;
     _playListId: any;
@@ -23,6 +25,18 @@ export class PlayListComponent implements OnInit {
     songs: any[];
     newMode: boolean;
     editingPlaylist: any;
+    addingSongs: boolean;
+    addSongs() {
+         
+        this.addingSongs = true;
+    }
+    doneAdding() {
+        this.addingSongs = false;
+    }
+    songsAdded(song) {
+        this.loadPlayList();
+    }
+
     newPlayList() {
         this.editingPlaylist = {};
         
