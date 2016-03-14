@@ -36,7 +36,7 @@
                     <tr>
                         <th></th>
                         <th>Title</th>
-                        <th>Artist</th>
+                        <th>Key</th>
                         <th>Links</th>
                         <th>Note</th>
                     </tr>
@@ -47,7 +47,7 @@
                             <a (click)="removeSong(song)">Remove</a>
                         </td>
                         <td>{{song.name}}</td>
-                        <td>{{song.artist}}</td>
+                        <td>{{song.key}}</td>
                         <td>
                             <div *ngFor="#link of song.links">
                                 <a [href]="link.link" target="_blank">{{link.description}}</a>

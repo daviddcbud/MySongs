@@ -127,7 +127,7 @@ var PlayListComponent = (function () {
     ], PlayListComponent.prototype, "_addSongsComponent", void 0);
     PlayListComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/playLists.html?v=1.7',
+            templateUrl: '/views/playLists.html?v=1.8',
             selector: 'playList',
             directives: [autocompleteComponent_1.AutoCompleteComponent, addSongsComponent_1.AddSongsComponent]
         }), 

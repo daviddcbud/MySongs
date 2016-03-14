@@ -9,7 +9,7 @@ import 'rxjs/Rx'
 import {ErrorHandlerService} from "./shared/errorHandlerService"
 import {AddSongsComponent} from "./addSongsComponent"
 @Component({
-    templateUrl: '/views/playLists.html?v=1.7',
+    templateUrl: '/views/playLists.html?v=1.8',
     selector: 'playList',
     directives: [AutoCompleteComponent, AddSongsComponent]
 })

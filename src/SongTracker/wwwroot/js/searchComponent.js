@@ -101,7 +101,7 @@ var SearchComponent = (function () {
     ], SearchComponent.prototype, "_songComponent", void 0);
     SearchComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/search.html?v=1.4',
+            templateUrl: '/views/search.html?v=1.5',
             selector: 'search',
             directives: [autocompleteComponent_1.AutoCompleteComponent, songComponent_1.SongComponent]
         }), 

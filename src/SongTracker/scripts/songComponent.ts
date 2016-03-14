@@ -8,7 +8,7 @@ import 'rxjs/Rx'
 import {ErrorHandlerService} from "./shared/errorHandlerService"
 
 @Component({
-    templateUrl: '/views/song.html?v=1.1',
+    templateUrl: '/views/song.html?v=1.3',
     selector: 'song',
     directives: [AutoCompleteComponent]
 })

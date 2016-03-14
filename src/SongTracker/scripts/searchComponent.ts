@@ -10,7 +10,7 @@ import {ErrorHandlerService} from "./shared/errorHandlerService"
 import {SongComponent} from "./songComponent"
 
 @Component({
-    templateUrl: '/views/search.html?v=1.4',
+    templateUrl: '/views/search.html?v=1.5',
     selector: 'search',
     directives: [AutoCompleteComponent, SongComponent]
 })
