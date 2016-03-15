@@ -8,6 +8,13 @@ namespace SongTracker.Models
     public class SearchResult
     {
         private Song song;
+        public string Key
+        {
+            get
+            {
+                return song.Key;
+            }
+        }
         public string Categories
         {
             get

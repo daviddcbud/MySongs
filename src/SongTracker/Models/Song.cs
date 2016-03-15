@@ -32,7 +32,7 @@ namespace SongTracker.Models
             modelBuilder.Entity<Song>()
                         .Property(s => s.Name)
                         .HasColumnType("varchar")
-                        .HasMaxLength(50)
+                        .HasMaxLength(150)
                         .IsRequired();
 
 

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Mvc;
 using SongTracker.Models;
+using System.Data.SqlClient;
+using SongTracker.Services;
 
 namespace SongTracker.Controllers
 {
@@ -90,12 +92,15 @@ namespace SongTracker.Controllers
                 vm.Date = data.Date;
                 vm.Description = data.Description;
                 vm.Id = data.Id;
+                var lookup = new Dictionary<int, SongVM>();
                 foreach(var song in data.SongPlayLists)
                 {
                     var songVM = new SongVM();
+                    lookup.Add(song.SongId,songVM);
                     songVM.PlayListId = vm.Id;
                     songVM.Note = song.Note;
                     songVM.Artist = song.Song.Artist;
+                    songVM.Key = song.Song.Key;
                     songVM.Name = song.Song.Name;
                     song.Order = song.Order;
                     songVM.Id =song.SongId;
@@ -107,6 +112,26 @@ namespace SongTracker.Controllers
                         
 
                     }
+                }
+
+                using (var conn = new SqlConnection(AzureAppSettings.ConnectionString))
+                {
+                    await conn.OpenAsync();
+                    var cmd = new SqlCommand("", conn);
+                    var startDate = DateTime.Now.AddYears(-1);
+                    cmd.CommandText = string.Format("select sp.songid,count(*) as total from SongPlayLists sp inner join Playlists p on p.id=sp.PlayListId  " +
+                "where date >= '{0}' group by sp.songid ", startDate);
+                    var reader = await cmd.ExecuteReaderAsync();
+                    while (reader.Read())
+                    {
+                        var songid = int.Parse(reader["SongId"].ToString());
+                        if (lookup.ContainsKey(songid))
+                        {
+                            var song = lookup[songid];
+                            song.PlayCount = int.Parse(reader["total"].ToString());
+                        }
+                    }
+                    reader.Close();
                 }
                 return new ObjectResult(vm);
             });

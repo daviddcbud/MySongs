@@ -23,9 +23,11 @@ namespace SongTracker.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Artist { get; set; }
+        public string Key { get; set; }
         public List<SongLink> Links { get; set; }
         public string Note { get; internal set; }
         public int PlayListId { get; set; }
+        public int PlayCount { get; internal set; }
 
         public SongVM()
         {

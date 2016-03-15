@@ -91,7 +91,7 @@ var SongComponent = (function () {
     ], SongComponent.prototype, "onSave", void 0);
     SongComponent = __decorate([
         core_1.Component({
-            templateUrl: '/views/song.html?v=1.2',
+            templateUrl: '/views/song.html?v=1.3',
             selector: 'song',
             directives: [autocompleteComponent_1.AutoCompleteComponent]
         }), 
